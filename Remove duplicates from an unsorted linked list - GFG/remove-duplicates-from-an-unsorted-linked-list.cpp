@@ -45,7 +45,8 @@ class Solution
    {
        Node *prev = NULL;
       unordered_set<int> s;
-      for(Node *curr=head; curr!=NULL;){
+      Node* curr=head;
+      while(curr!=NULL){
            if(s.find(curr->data)!=s.end()){
                Node *temp = curr;
                prev->next=temp->next;
