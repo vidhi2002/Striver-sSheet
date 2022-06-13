@@ -19,8 +19,6 @@ public:
             p=p->next;
         }
         ListNode* ans=head;
-        if(count%2==0)
-        {
             
             int r=count/2;
             while(r>0)
@@ -28,16 +26,7 @@ public:
                 ans=ans->next;
                 r--;
             }
-        }
-        else
-        {
-            int r=count/2;
-            while(r>0)
-            {
-                ans=ans->next;
-                r--;
-            }
-        }
+        
         return ans;
         
     }
