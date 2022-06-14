@@ -52,24 +52,23 @@ class Solution{
     // your task is to complete this function
     int countPairs(struct Node* head1, struct Node* head2, int x) {
         // Code here
-         unordered_set<int> s;
-       struct Node *temp=head1;
-       while(temp)
+         unordered_map<int ,int> m;
+       struct Node* temp1=head1;
+       struct Node* temp2=head2;
+       int count=0;
+       while(temp1!=NULL)
        {
-           s.insert(x-temp->data);
-           temp=temp->next;
+           m[temp1->data]++;
+           temp1=temp1->next;
        }
-       int cnt=0;
-       temp=head2;
-       while(temp)
+       while(temp2!=NULL)
        {
-           if(s.find(temp->data)!=s.end())
-           {
-               cnt++;
-           }
-           temp=temp->next;
+           int flag=x-(temp2->data);
+           if(m.find(flag)!=m.end())
+           count++;
+           temp2=temp2->next;
        }
-       return cnt;
+       return count;
     }
 };
 
