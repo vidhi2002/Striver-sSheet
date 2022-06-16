@@ -29,11 +29,12 @@ int main() {
 
 
 vector<long long> printFirstNegativeInteger(long long int A[],
-                                             long long int N, long long int K) {
-    /*vector<int> ans;                                           
+                                             long long int N, long long int K)
+{
+    vector<long long> ans;                                           
     if(N<K)
     {
-        for(int i=0;i<N;i++)
+        for(long long i=0;i<N;i++)
         {
             if(A[i]<0)
             {
@@ -44,9 +45,9 @@ vector<long long> printFirstNegativeInteger(long long int A[],
     }
     else
     {
-        int i=0,j=0;
-        queue<int> q;
-        while(j<n)
+        long long i=0,j=0;
+        queue<long long> q;
+        while(j<N)
         {
             if(j-i+1<=K)
             {
@@ -59,42 +60,16 @@ vector<long long> printFirstNegativeInteger(long long int A[],
                 if(q.empty())
                     ans.push_back(0);
                 else
-                    ans.push_back(ans.front());
+                    ans.push_back(q.front());
+                if(A[i]==q.front())
+                    q.pop();
+                i++;
             }
         }
+        if(q.empty())
+            ans.push_back(0);
+        else
+            ans.push_back(q.front());
     }
-    return ans;*/
-     queue<long long int> q;
-   vector<long long> ans;
-   long long int i;
-   for(i = 0; i < K-1; i++)
-   {
-       if(A[i] < 0)
-       {
-           q.push(i);
-       }
-   }
-   long long int j = 0; 
-   while(i < N)
-   {
-       if(A[i] < 0)
-       {
-           q.push(i);
-       }
-       if(!q.empty())
-       {
-           ans.push_back(A[q.front()]);
-           if(q.front() == j)
-           {
-               q.pop();
-           }
-       }
-       else
-       {
-           ans.push_back(0);
-       }
-       j++;
-       i++;
-   }
-   return ans;
+    return ans;
  }
