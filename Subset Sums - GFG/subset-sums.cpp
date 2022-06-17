@@ -6,22 +6,25 @@ using namespace std;
 class Solution
 {
 public:
-    void sub(vector<int>& v,int N,int sum,vector<int>& ans)
+    vector<int> sub(vector<int>& v,int N,int sum)
     {
+        vector<int> ans;
         if(N==0){
             ans.push_back(sum);
-            return;
+            return ans;
         }
         
-            int d=v[N-1];
-            sub(v,N-1,sum+d,ans);
-            sub(v,N-1,sum,ans);
+        int d=v[N-1];
+        vector<int> l=sub(v,N-1,sum+d);
+        vector<int> r=sub(v,N-1,sum);
+        ans.insert(ans.end(),l.begin(),l.end());
+        ans.insert(ans.end(),r.begin(),r.end());
+        return ans;
     }
     vector<int> subsetSums(vector<int> arr, int N)
     {
         // Write Your Code here
-        vector<int> ans;
-        sub(arr,N,0,ans);
+        vector<int> ans=sub(arr,N,0);
         sort(ans.begin(),ans.end());
         return ans;
     }
