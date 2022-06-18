@@ -9,28 +9,24 @@ using namespace std;
 
 class Solution{
     public:
-    int minSubset(vector<int> &Arr,int N){
-	// Sort the array
-       sort(Arr.begin(),Arr.end());
-       
-    // Find sum of all elements
-       long long totalSum = 0;
-       for(int i=0;i<N;i++){
-           totalSum+=Arr[i];
-       }
-       
-    // If all the elements in the array are 0, return N
-       if(totalSum == 0) return N;
-       
-    // Calculate and check for minimum sum required
-       long long minSum = 0;
-       for(int j=N-1;j>=0;j--){
-           minSum+=Arr[j];
-           totalSum-=Arr[j];
-           if(minSum>totalSum)
-               return N-j;
-       }
-   }
+    int minSubset(vector<int> &arr,int n){
+        sort(arr.begin(),arr.end());
+        long long sum=0;
+        for(int i=0;i<n;i++)
+            sum=sum+arr[i];
+        int j=n-1,ans=0;
+        long long m=0;
+        while(j>=0)
+        {
+            m=m+arr[j];
+            sum=sum-arr[j];
+            ans++;
+            if(m>sum)
+                break;
+            j--;
+        }
+        return ans;
+    }
 };
 
 // { Driver Code Starts.
