@@ -5,12 +5,24 @@ using namespace std;
  // } Driver Code Ends
 class Solution{
 public:
+    void solve(vector<int>& v,int k,int index,int &ans)
+    {
+        if(v.size()==1)
+        {
+            ans=v[0];
+            return;
+        }
+        index=(index+k)%v.size();
+        v.erase(v.begin()+index);
+        solve(v,k,index,ans);
+    }
     int find(int N){
         // code here
-        int p=log2(N);
-        int num=pow(2,p);
-        
-        int ans=(N-num)*2 + 1;
+        vector<int> v;
+        for(int i=1;i<=N;i++)
+            v.push_back(i);
+        int ans;
+        solve(v,1,0,ans);
         return ans;
     }
 };
