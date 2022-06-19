@@ -38,26 +38,29 @@ class Solution
     Node *sortedInsert(Node* head, int data)
     {
        //Your code here
-            Node* newnode= new Node(data);
-      Node* temp= head;
-      while(temp->next!=head){
-          if(temp->data<data&&temp->next->data>=data){
-              newnode->next=temp->next;
-              temp->next=newnode;
-          }
-          temp=temp->next;
-      }
-      // temp ptr points the last node 
-      // lastly check heads data is less or more than given data 
-      // if yes than make newnode our head and connect the last node 
-      // that is temp to newhead to maintain circular LL
-      if(head->data>data){
-          newnode->next=head;
-          head= newnode;
-          temp->next=head;
-      }
-      return head;
-    
+       if(data<=head->data)
+       {
+            Node* p=head;
+            Node* pre=p->next;
+            while(pre->next!=p)
+                pre=pre->next;
+            Node* new_node=new Node(data);
+            pre->next=new_node;
+            new_node->next=head;
+            head=new_node;
+            return head;
+       }
+       Node* p=head;
+       Node* pre;
+       while(p->data<data)
+       {
+           pre=p;
+           p=p->next;
+       }
+       Node* new_node=new Node(data);
+       pre->next=new_node;
+       new_node->next=p;
+       return head;
        
     }
 };
