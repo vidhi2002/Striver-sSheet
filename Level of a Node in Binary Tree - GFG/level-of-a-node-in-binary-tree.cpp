@@ -122,19 +122,15 @@ class Solution{
                 struct Node* p=q.front();
                 q.pop();
                 if(p->data==target)
-                {
-                    ans=level;
-                    break;
-                }
+                    return level;
                 if(p->left)
                     q.push(p->left);
                 if(p->right)
                     q.push(p->right);
             }
-            if(ans!=0)
-                break;
+            level++;
         }
-        return ans;
+        return 0;
     }
 };
 
