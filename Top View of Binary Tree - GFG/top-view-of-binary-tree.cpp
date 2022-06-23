@@ -113,37 +113,45 @@ class Solution
         }
         return false;
     }
+    static bool compare(pair<int,int> a,pair<int,int> b)
+    {
+        return a.second<b.second;
+    }
     vector<int> topView(Node *root)
     {
         //Your code here
         vector<int> ans;
-        map<int,int> m;
+        if(root==NULL)
+            return ans;
         queue<pair<Node*,int>> q;
         q.push({root,0});
-        while(q.size()>0)
+        //unordered_map<int,int> mp;
+        vector<pair<int,int>> mp;
+        while(!q.empty())
         {
-            auto it=q.front();
-            q.pop();
-            if(m.find(it.second)==m.end())
+            int n=q.size();
+            for(int i=0;i<n;i++)
             {
-                m[it.second]=it.first->data;
+                auto t=q.front();
+                Node* p=t.first;
+                int x=t.second;
+                q.pop();
+                if(mp.size()==0)
+                    mp.push_back(make_pair(p->data,x));
+                else{
+                    if(f(mp,x)==false)
+                        mp.push_back(make_pair(p->data,x));
+                }
+                if(p->left)
+                    q.push({p->left,x-1});
+                if(p->right)
+                    q.push({p->right,x+1});
             }
-            if(it.first->left!=NULL)
-            {
-                q.push({it.first->left,it.second-1});
-            }
-            if(it.first->right!=NULL)
-            {
-                q.push({it.first->right,it.second+1});
-            }
-            
         }
-        for(auto &x:m)
-            {
-                ans.push_back(x.second);
-            }
+        sort(mp.begin(),mp.end(),compare);
+        for(auto it=mp.begin();it!=mp.end();it++)
+            ans.push_back(it->first);
         return ans;
-        
     }
 
 };
