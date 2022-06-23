@@ -31,35 +31,21 @@ int main()
 
 
 /*You are required to complete this function*/
-vector<vector<int>> uniqueRow(int M[MAX][MAX],int row,int col)
+vector<vector<int>> uniqueRow(int arr[MAX][MAX],int row,int col)
 {
 //Your code here
+    map<vector<int>,int> mp;
     vector<vector<int>> ans;
-unordered_map<int,int> u1;
-set<int> u2;
-int sum = 0;
-for(int i=0;i<row;i++){
-   sum = 0;
-   for(int j=0;j<col;j++){
-       sum = sum + M[i][j]*pow(2,j);
-   }
-   auto it = u1.find(sum);
-   if(it != u1.end()){
-       continue;
-   }
-   else{
-       u1.insert({sum,i});
-   }
-}
-for(auto it = u1.begin();it != u1.end();it++){
-   u2.insert(it->second);
-}
-for(auto it = u2.begin();it != u2.end();it++){
-   vector<int> row1;
-   for(int j=0;j<col;j++){
-       row1.push_back(M[(*it)][j]);
-   }
-   ans.push_back(row1);
-}
-return ans;
+    for(int i=0;i<row;i++)
+    {
+        vector<int> tmp;
+        for(int j=0;j<col;j++)
+            tmp.push_back(arr[i][j]);
+        if(mp.find(tmp)==mp.end()){
+            mp[tmp]++; 
+            ans.push_back(tmp);
+        }
+        
+    }
+    return ans;
 }
