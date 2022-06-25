@@ -116,31 +116,38 @@ struct Node
 }; */
 
 // function should print the nodes at k distance from root
-void solve(struct Node *root, int k,vector<int>&v){
-  if(root==NULL){
-      return ;
-  } 
-   if(k<0){
-      return ;
-  }
- if(k==0){
-     v.push_back(root->data);
- } 
-  
-  solve(root->left ,k-1 ,v);
-  solve(root->right ,k-1 ,v);
-  
-  
-}
 vector<int> Kdistance(struct Node *root, int k)
 {
- // Your code here
- vector<int>v;
- if(root==NULL){
-     return v;
- }
- solve(root ,k ,v);
- 
-   return v;
- 
+  // Your code here
+  vector<int> ans;
+  if(root==NULL)
+    return ans;
+    if(k==0)
+    {
+        ans.push_back(root->data);
+        return ans;
+    }
+    queue<Node*> q;
+    q.push(root);
+    
+    while(!q.empty())
+    {
+        int n=q.size();
+        for(int i=0;i<n;i++)
+        {
+            Node* p=q.front();
+            q.pop();
+            if(k==0)
+                ans.push_back(p->data);
+            if(p->left)
+                q.push(p->left);
+            if(p->right)
+                q.push(p->right);
+        }
+        if(k==0)
+            break;
+        k--;
+    }
+    return ans;
+  
 }
