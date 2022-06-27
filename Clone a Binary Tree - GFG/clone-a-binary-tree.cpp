@@ -64,31 +64,36 @@ class Solution{
   public:
     /* The function should clone the passed tree and return 
        root of the cloned tree */
-    Node*solve(Node*root,unordered_map<Node*,Node*>&mapi){
-          if(root==NULL)return NULL;
-          Node*temp=new Node(root->data);
-          mapi[root]=temp;
-          temp->left=solve(root->left,mapi);
-          temp->right=solve(root->right,mapi);
-          return temp;
-      }
-      void randomi(Node*root,unordered_map<Node*,Node*>&mapi){
-          if(root==NULL)return;
-          randomi(root->left,mapi);
-          mapi[root]->random=mapi[root->random];
-          randomi(root->right,mapi);
-      }
-      
-   Node* cloneTree(Node* tree)
-   {
-      //Your code here
-      if(!tree)return NULL;
-      unordered_map<Node*,Node*>mapi;
-      Node*root=solve(tree,mapi);
-      randomi(tree,mapi);
-      return root;
-      
-   }
+    Node* solve(Node* root,unordered_map<Node*,Node*>& mp)
+    {
+        if(root==NULL)
+            return NULL;
+        Node* tmp=new Node(root->data);
+        mp[root]=tmp;
+        tmp->left=solve(root->left,mp);
+        tmp->right=solve(root->right,mp);
+        return tmp;
+    }
+    void random(Node* root,unordered_map<Node*,Node*>& mp)
+    {
+        if(root==NULL)
+            return;
+        random(root->left,mp);
+        mp[root]->random=mp[root->random];
+        random(root->right,mp);
+    }
+    Node* cloneTree(Node* tree)
+    {
+       //Your code here
+        if(tree==NULL)
+            return NULL;
+        unordered_map<Node*,Node*> mp;
+        Node* root=solve(tree,mp);
+        random(tree,mp);
+        return root;
+        
+       
+    }
 };
 
 
