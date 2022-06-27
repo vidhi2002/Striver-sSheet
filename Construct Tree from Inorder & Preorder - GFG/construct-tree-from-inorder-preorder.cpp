@@ -40,29 +40,28 @@ struct Node
 };
 */
 class Solution{
- public:
-    int order=0;
-    Node* build(int in[],int pre[],int s,int e){
-        if(s>e){
-            return NULL;
-        }
-        Node* root=new Node(pre[order++]);
-        int index=0;
-        for(int i=s;i<=e;i++){
-            if(in[i]==root->data){
-                index=i;
-                break;
-            }
-        }
-        root->left=build(in,pre,s,index-1);
-        root->right=build(in,pre,index+1,e);
-        return root;
-    }
-    
+    public:
     Node* buildTree(int in[],int pre[], int n)
     {
         // Code here
-       return build(in,pre,0,n-1);
+        if(n==0)
+            return NULL;
+        map<int,int> mp;
+        for(int i=0;i<n;i++)
+            mp[in[i]]=i;
+        Node* root=build(in,0,n-1,pre,0,n-1,mp,n);
+        return root;
+    }
+    Node* build(int in[],int inS,int inE,int pre[],int preS,int preE,map<int,int>& mp,int n)
+    {
+        if(inS>inE || preS>preE)
+            return NULL;
+        Node *root=new Node(pre[preS]);
+        int inRoot=mp[root->data];
+        int numsLeft=inRoot-inS;
+        root->left=build(in,inS,inRoot-1,pre,preS+1,preS+numsLeft,mp,n);
+        root->right=build(in,inRoot+1,inE,pre,preS+numsLeft+1,preE,mp,n);
+        return root;
     }
 };
 
