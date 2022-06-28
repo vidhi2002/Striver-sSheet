@@ -7,34 +7,65 @@ class Solution
 {   
     public: 
     //Function to return a list of integers denoting spiral traversal of matrix.
-    vector<int> spirallyTraverse(vector<vector<int> > A, int r, int c) 
+    vector<int> spirallyTraverse(vector<vector<int> > matrix, int k, int c) 
     {
-      vector<int> res;
-      int top=0,bottom=r-1,right=c-1,left=0;
-      while(top<=bottom && left<=right){
-          for(int i=left;i<=right;i++){
-              res.push_back(A[top][i]);
-          }
-          top++;
-          for(int i=top;i<=bottom;i++){
-              res.push_back(A[i][right]);
-          }
-          right--;
-          if(top<=bottom){
-          for(int i=right;i>=left;i--){
-              res.push_back(A[bottom][i]);
-          }
-          bottom--;
-          }
-          if(left<=right){
-              for(int i=bottom;i>=top;i--){
-                  res.push_back(A[i][left]);
-              }
-              left++;
-          }
-      }
-      return res;
-   }
+        // code here 
+        int size=k*c;
+        int l=c-1,r=0,d=k-1,u=1;
+        int t=0,i=0,j=0,jack=1;
+        vector<int> ans;
+        while(size--)
+        {
+            if(jack==1 && j<=l-t)
+            {
+                ans.push_back(matrix[i][j]);
+                j++;
+                if(j==l+1-t)
+                {
+                    jack=2;
+                    j--;
+                    i++;
+                }
+            }
+            else if(jack==2 && i<=d-t)
+            {
+                ans.push_back(matrix[i][j]);
+                i++;
+                if(i==d-t+1)
+                {
+                    jack=3;
+                    i--;
+                    j--;
+                }
+            }
+            else if(jack==3 && j>=r+t)
+            {
+                ans.push_back(matrix[i][j]);
+                j--;
+                if(j==r+t-1)
+                {
+                    jack=4;
+                    j++;
+                    i--;
+                }
+            }
+            else if(jack==4 && i>=u+t)
+            {
+                ans.push_back(matrix[i][j]);
+                i--;
+                if(i==u+t-1)
+                {
+                    jack=1;
+                    i++;
+                    j++;
+                    t++;
+                }
+            }
+        }
+        return ans;
+        
+        
+    }
 };
 
 // { Driver Code Starts.
