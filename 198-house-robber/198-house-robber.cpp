@@ -1,22 +1,16 @@
 class Solution {
 public:
-    int dpsol(vector<int>v,int n){
-        vector<int>dp(n+1);
-        dp[0] = 0;
-        dp[1] = v[0];
-        if(n>1)
-        dp[2] = max(v[1],v[0]);
-        
-        for(int i=3;i<=n;i++){
-            dp[i] = dp[i-1];
-            
-            dp[i] = max(dp[i],v[i-1]+dp[i-2]);
-        }
-       
-        return dp[n];
-    }
+
     int rob(vector<int>& nums) {
         int n = nums.size();
-        return dpsol(nums,n);
+        if(n == 1) return nums[0];
+        int dp[n];
+        memset(dp,0,sizeof(dp));
+        dp[0] = nums[0];
+        dp[1] = max(nums[0],nums[1]);
+        for(int i= 2;i<n;i++){
+            dp[i] = max(nums[i] + dp[i-2] , dp[i-1]);
+        }
+        return dp[n-1];
     }
 };
