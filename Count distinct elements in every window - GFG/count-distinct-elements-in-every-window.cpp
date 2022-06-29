@@ -8,31 +8,33 @@ using namespace std;
 
 class Solution{
   public:
-    vector <int> countDistinct (int a[], int n, int k)
+    vector <int> countDistinct (int A[], int n, int k)
     {
         //code here.
+        map<int,int> mp;
+        int i=0,j=0;
         vector<int> ans;
-        set <int> st; // num. of distinct
-        map <int,int> mp;
-        
-        for(int i=0;i<k;i++) {
-            mp[a[i]]++; // 2 1 1
-            st.insert(a[i]); // 1 2 3
-        }
-        ans.push_back(st.size()); // 3
-        
-        for(int i=k;i<n;i++) {
-            mp[a[i-k]]--;
-            
-            if(mp[a[i-k]] == 0) {
-                st.erase(a[i-k]);
-                mp.erase(a[i-k]);
+        while(i<n && j<n)
+        {
+            if((j-i+1)<=k)
+            {
+                mp[A[j]]++;
+                //cout<<A[j]<<" ";
+                j++;
             }
-            
-            mp[a[i]]++;
-            st.insert(a[i]);
-            ans.push_back(st.size());
-            
+            //cout<<i<<" "<<j<<endl;
+            if((j-i)==k)
+            {
+                ans.push_back(mp.size());
+                /*cout<<"check ";
+                for(auto it=mp.begin();it!=mp.end();it++)
+                    cout<<it->first<<"->"<<it->second<<" ";
+                cout<<endl;*/
+                mp[A[i]]--;
+                if(mp[A[i]]==0)
+                    mp.erase(A[i]);
+                i++;
+            }
         }
         return ans;
     }
