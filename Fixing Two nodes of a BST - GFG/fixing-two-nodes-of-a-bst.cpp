@@ -112,38 +112,50 @@ struct Node
 */
 
 class Solution {
-  private:
-    Node *first = nullptr;
-    Node *second = nullptr;
-    Node *prev = nullptr;
   public:
-    //Function to solve the given problem
-    void correctBSTUntil(struct Node* root)
-    {
-        if(root == nullptr)
-            return;
-        
-        //call the function for left subtree
-        correctBSTUntil(root->left);
-        
-        if(prev != nullptr && prev->data > root->data)
-        {
-            if(first == nullptr)
-                first = prev;
-            second = root;
-        }
-            
-        prev = root;
-        //call function for irght subtree
-        correctBSTUntil(root->right);
-    }
+  void inorder(Node* root,vector<Node*>& v)
+  {
+      if(root==NULL)
+        return ;
+        inorder(root->left,v);
+        v.push_back(root);
+        inorder(root->right,v);
+  }
     void correctBST( struct Node* root )
     {
         // add code here.
-        correctBSTUntil(root);
-        swap(first->data, second->data);
+        vector<Node*> v;
+        inorder(root,v);
+        Node*p;
+        Node* q;
+        int check=0,r;
+        for(int i=1;i<v.size();i++)
+        {
+            if(check==0 && v[i]->data<=v[i-1]->data){
+                
+                p=v[i-1];
+                //cout<<"in "<<p->data<<endl;
+                r=i-1;
+                check=1;
+            }
+            else if(check==1 && v[i]->data<=v[i-1]->data)
+            {
+                q=v[i];
+                //cout<<"in2 "<<q->data<<endl;
+                check=2;
+                break;
+            }
+        }
+        if(check==1)
+        {
+            q=v[r+1];
+            swap(p->data,q->data);
+        }
+        else
+            swap(p->data,q->data);
     }
 };
+
 
 // { Driver Code Starts.
 
