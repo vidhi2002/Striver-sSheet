@@ -98,54 +98,34 @@ struct Node {
         left = right = NULL;
     }
 };*/
-class Pair{
-  public:
-  int count;
-  bool isbst;
-  int maxi;
-  int mini;
+class t{
+    public:
+    int maxi,mini,size;
+    t(int mini,int maxi,int size)
+    {
+        this->maxi=maxi;
+        this->mini=mini;
+        this->size=size;
+    }
 };
-
 class Solution{
     public:
-    vector<int>v;
-    Pair is_BST(Node* root)
-    {
-        Pair p;
-        if(root==NULL)
-        {
-            p.count=0;
-            p.isbst = true;
-            p.mini = INT_MAX;
-            p.maxi = INT_MIN;
-            return p;
-        }
-        
-        Pair ls = is_BST(root->left);
-        Pair rs = is_BST(root->right);
-        
-        p.maxi = max(root->data,rs.maxi);
-        p.mini = min(root->data,ls.mini);
-        if(ls.isbst and rs.isbst && (ls.maxi<root->data) && (rs.mini>root->data))
-        p.isbst = true;
-        else 
-        p.isbst = false;
-        
-        p.count = ls.count+rs.count+1;
-        
-        if(p.isbst)
-        v.push_back(p.count);
-        
-        return p;
-    }
     /*You are required to complete this method */
     // Return the size of the largest sub-tree which is also a BST
+    t helper(Node* root)
+    {
+        if(!root)
+            return t(INT_MAX,INT_MIN,0);
+        auto l=helper(root->left);
+        auto r=helper(root->right);
+        if(l.maxi<root->data && r.mini>root->data)
+            return t(min(root->data,l.mini),max(root->data,r.maxi),l.size+r.size+1);
+        return t(INT_MIN,INT_MAX,max(l.size,r.size));
+    }
     int largestBst(Node *root)
     {
-        int ans;
-    	Pair p = is_BST(root);
-    	sort(v.begin(),v.end());
-    	return v[v.size()-1];
+    	//Your code here
+    	return helper(root).size;
     }
 };
 
