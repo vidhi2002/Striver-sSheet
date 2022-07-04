@@ -7,32 +7,16 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
-  long long int Summ(long long int x)
-  {
-      long long int ans=1,k=2;
-      while(x>1)
-      {
-          if(x%k==0){
-            ans+=k;
-            x=x/k;
-            cout<<k<<" ";
-          }
-            else
-                k++;
-      }
-      cout<<ans;
-      return ans+1;
-  }
     string isDeficient(long long int x) {
         // code here
-        long sum = 0;
-        for(long i = 1;i<=x;i++){
-            if(x%i==0){
-                sum = sum+i;
-            }
+        long long int ans=0;
+        for(int i=1;i<=x;i++)
+        {
+            if(x%i==0)
+                ans+=i;
         }
-        if(2*x>sum)
-        return "YES";
+        if(ans<2*x)
+            return "YES";
         return "NO";
     }
 };
