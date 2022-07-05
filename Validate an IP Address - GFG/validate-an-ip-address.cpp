@@ -9,42 +9,56 @@ IP string is valid else return 0
 You are required to complete this method */
 class Solution {
     public:
-         int isValid(string s) {
-           if(s[0]=='.')
-           {return 0;}
-           s.push_back('.');
-           int i,n=s.length() , sum=0,idot=0;
-           
-           for(i=0; i<n; i++)
-           {   
-               
-               char c=s[i];
-               if(c<'0'&&s[i]!='.'||c>'9'&&s[i]!='.')
-               {
-                   return 0;
-               }
-               //checking if 0 and dot is repeating
-               if(s[i]=='.'&&s[i+1]=='.'||s[i-1]=='.'&&s[i]=='0'&&s[i+1]!='.'||s[i]=='0'&&s[i+1]=='0')
-               {
-                  return 0;
-               }
-               else if(s[i]=='.')
-               {
-                   if(sum>255||sum<0)
-                       {
-                           return 0;
-                       }
-                   sum=0;
-                   idot=idot+1;
-               }
-               else {
-               sum=sum*10+(s[i]-'0');
-               }
-           }
-           if(idot==4)
-               return 1;
-           else return 0;
-       }
+        int isValid(string s) {
+            // code here
+            if(s.length()>19)
+                return 0;
+            if(s[s.length()-1]=='.')
+                return 0;
+            vector<string> v;
+            stringstream data(s);
+            string str="";
+            while(data){
+                getline(data,str,'.');
+                v.push_back(str);
+            }
+            int check=0;
+            if(v.size()>5)
+                return 0;
+            if(v.size()<4)
+                return 0;
+            for(int i=0;i<v.size()-1;i++)
+            {
+                if(v[i].length()==0)
+                    return 0;
+                else if(v[i].length()>3)
+                    return 0;
+                else if(v[i].length()==1)
+                {
+                    if(isalpha(v[i][0]))
+                        return 0;
+                    else if(stoi(v[i])>=0 && stoi(v[i])<=9)
+                        check++;
+                }
+                else if(v[i].length()==2 || v[i].length()==3)
+                {
+                    if(isalpha(v[i][0]) || isalpha(v[i][1]))
+                        return 0;
+                    else if(v[i].length()==3 && isalpha(v[i][2]))
+                        return 0;
+                    else if(v[i][0]=='0')
+                        return 0;
+                    else if(stoi(v[i])>=0 && stoi(v[i])<=255)
+                        check++;
+                    else
+                        return 0;
+                }
+                
+            }
+            if(check==4)
+                return 1;
+            return 0;
+        }
 };
 
 // { Driver Code Starts.
