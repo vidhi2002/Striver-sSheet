@@ -8,58 +8,40 @@ using namespace std;
 
 class Solution {
   public:
-    bool check(int arr[], int n, int d, int mid)
- {
-     int count=1;
-     int sum=0;
-     for(int i=0;i<n;i++)
-     {
-         if(arr[i]>mid)
-         return false;
-         else if(sum+arr[i]<=mid)
-         {
-           sum+=arr[i];  
-         }
-         else
-         {
-             sum=arr[i];
-             count++;
-         }
-     }
-     
-     if(count<=d)
-     return true;
-     else
-     return false;
- }
- 
-   int leastWeightCapacity(int arr[], int n, int D) 
-   {
-      int high=0;
-      int low=1;
-      for(int i=0;i<n;i++)
+  bool canShip(int arr[],int N,int D,long long capacity)
+  {
+      long long days=1,cur=0;
+      for(int i=0;i<N;i++)
       {
-          high+=arr[i];
-      }
-      int ans=0;
-      
-      while(low<=high)
-      {
-          int mid=low+(high-low)/2;
-          if(check(arr, n, D, mid))
+          cur+=arr[i];
+          if(cur>capacity)
           {
-              ans=mid;
-              high=mid-1;
-          }
-          else
-          {
-             low=mid+1; 
+              days++;
+              cur=arr[i];
           }
       }
-      
-      return ans;
-      
-   }
+      return days<=D;
+  }
+  long long summ(int arr[],int N)
+  {
+      long long sum=0;
+      for(int i=0;i<N;i++)
+        sum+=arr[i];
+    return sum;
+  }
+    int leastWeightCapacity(int arr[], int N, int D) {
+        // code here
+        long long left=*max_element(arr,arr+N),right=summ(arr,N);
+        while(left<right)
+        {
+            long long mid=left+(right-left)/2;
+            if(canShip(arr,N,D,mid))
+                right=mid;
+            else
+                left=mid+1;
+        }
+        return right;
+    }
 };
 
 // { Driver Code Starts.
