@@ -7,27 +7,28 @@ using namespace std;
 //User function Template for C++
 
 class Solution {
- public:
-   vector<long long> distributeCandies(int n, int k) {
-       // code here
-       vector<long long>v(k,0);
-       long long res=1;// increases by 1;
-       long long i=0;// index of array
-       while(n>0)
-       {
-           if(n>=res)
-           v[i%k]+=res;
-           else{
-           v[i%k]+=n;
-           break;
-           }
-           n-=res;
-           res++;
-           i++;
-       }
-       return v;
-   }
+  public:
+    vector<long long> distributeCandies(int N, int K) {
+        // code here
+        vector<long long> v(K,0);
+        int i=0,j=1;
+        while(N>0)
+        {
+            if(N<j){
+                v[i%K]+=N;
+                break;
+            }
+            else
+                v[i%K]+=j;
+            N-=j;
+            j++;
+            i++;
+        }
+        return v;
+        
+    }
 };
+
 // { Driver Code Starts.
 
 int main() {
