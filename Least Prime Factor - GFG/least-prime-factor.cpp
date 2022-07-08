@@ -6,32 +6,29 @@ using namespace std;
  // } Driver Code Ends
 // User function Template for C++
 class Solution {
- public:
-   vector<int> leastPrimeFactor(int N) {
-       // code here
-       vector<bool>primes(N+1,true);
-       primes[0]=0, primes[1]=0;
-       //sieve of eratosthenes
-       for(int i=2;i<=N;i++)
-       {
-           if(primes[i]){
-               for(int m=i*i;m<=N;m+=i)
-                   primes[m]=false; 
-           }
-       }
-       vector<int>ans(N+1,0);
-       ans[1] = 1, ans[2] = 2, ans[3] = 3;
-       for(int i=4;i<=N;i++){
-           for(int j=2;j<=i;j++){
-               if(primes[j]==true && i%j==0){
-                   ans[i] = j;
-                   break;
-               }
-           }
-       }
-     return ans; 
-   }
+  public:
+    int isPrime(int n)
+    {
+        if(n==1)
+            return 1;
+        for(int i=2;i*i<=n;i++)
+        {
+            if(n%i==0)
+                return i;
+        }
+        return n;
+    }
+    vector<int> leastPrimeFactor(int n) {
+        // code here
+        vector<int> ans;
+        for(int i=1;i<=n;i++)
+            ans.push_back(isPrime(i));
+        ans.insert(ans.begin(),1);
+        ans.pop_back();
+        return ans;
+    }
 };
+
 // { Driver Code Starts.
 int main() {
     int t;
