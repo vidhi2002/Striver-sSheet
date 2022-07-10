@@ -10,16 +10,33 @@ using namespace std;
 
 class Solution{
 public:
-    int remove_duplicate(int A[],int N){
+    int remove_duplicate(int a[],int n){
         // code here
-        int pointer=0;
-        for(int i=1; i<N; i++){
-            if(A[pointer]!=A[i]){
-                pointer++; 
-                A[pointer]=A[i];
+        int count=0,prev;
+        vector<int> v;
+        for(int i=0;i<n;i++)
+        {
+            if(i==0)
+            {
+                count++;
+                prev=a[i];
+                v.push_back(a[i]);
             }
+            else
+            {
+                if(a[i]!=prev)
+                {
+                    count++;
+                    prev=a[i];
+                    v.push_back(a[i]);
+                }
+                
+            }
+            
         }
-        return pointer+1;
+        for(int i=0;i<count;i++)
+            a[i]=v[i];
+        return count;
     }
 };
 
