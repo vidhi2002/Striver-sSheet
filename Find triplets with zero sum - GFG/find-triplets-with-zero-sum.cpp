@@ -12,14 +12,10 @@ using namespace std;
 class Solution{
   public:
     //Function to find triplets with zero sum.
-    bool findTriplets(int arr[], int n)
+    bool findTriplets(int v[], int n)
     { 
         //Your code here
-        vector<int> v(n);
-        for(int i=0;i<n;i++)
-        v[i]=arr[i];
-        
-        sort(v.begin(),v.end());
+        sort(v,v+n);
         for(int i=0;i<n;i++)
         {
             int lo=i+1,hi=n-1,sum=0-(v[i]);
