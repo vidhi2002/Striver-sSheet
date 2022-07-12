@@ -82,53 +82,72 @@ int main()
 */
 
 //Function to swap Kth node from beginning and end in a linked list.
-Node *swapkthnode(Node* head, int n, int k)
+Node *swapkthnode(Node* head, int num, int K)
 {
-   // Your Code here
-   if(n%2==1 && k==(n+1)/2){
-       return head;
-   }
-   if(k>n){
-       return head;
-   }
-   Node* l=head,*u=head;
-   Node* lp=NULL,*up=NULL;
-    if(k==n){
-       k=1;
-   }
-   if(n%2==0 && k==(n/2)+1){
-       k--;
-   }
-   int a=k;
-   int b=n-k;
-   while(a>1){
-       lp=l;
-       l=l->next;
-       a--;
-   }
-   while(b>0){
-       up=u;
-       u=u->next;
-       b--;
-   }
-   if(u->next == NULL ){
-       u->next=l->next;
-       l->next=NULL;
-       up->next=l;
-       return u;
-   }
-   if(l->next == u){
-       l->next=u->next;
-       u->next=l;
-       lp->next=u;
-       return head;
-   }
-   Node* temp=l->next;
-   Node* temp2=u->next;
-   u->next=NULL;
-   up->next=l;
-   lp->next=u;
-   u->next=temp;
-   l->next=temp2;
-   return head;
+    // Your Code here
+    if(K>num)
+        return head;
+    if(K==num || K==1)
+    {
+        Node* pre;
+        Node* p=head;
+        while(p->next!=NULL)
+        {
+            pre=p;
+            p=p->next;
+        }
+        p->next=head->next;
+        pre->next=head;
+        head->next=NULL;
+        head=p;
+        return p;
+    }
+    int start=K,end=num-K+1,i=1,j=1;
+    if(end<start)
+        swap(end,start);
+    Node* pre1;
+    Node* p1=head;
+    Node* n1=p1->next;
+    while(i<start)
+    {
+        pre1=p1;
+        p1=n1;
+        n1=n1->next;
+        i++;
+    }
+    Node* pre2;
+    Node* p2=head;
+    Node* n2=p2->next;
+    while(j<end)
+    {
+        pre2=p2;
+        p2=n2;
+        n2=n2->next;
+        j++;
+    }
+    if(num%2==0 && (start==num/2|| end==num/2))
+    {
+        pre1->next=p2;
+        p2->next=p1;
+        p1->next=n2;
+    }
+    else{
+        p2->next=n1;
+        p1->next=n2;
+        pre2->next=p1;
+        pre1->next=p2;
+    }
+    /*Node* t=head;
+    
+    while(t!=NULL)
+    {
+        cout<<t->data<<" ";
+        t=t->next;
+    }
+    cout<<endl;*/
+    return head;
+    
+    
+    
+    
 }
