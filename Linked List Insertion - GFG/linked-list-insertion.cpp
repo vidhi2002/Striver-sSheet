@@ -38,40 +38,42 @@ class Solution{
   public:
     //Function to insert a node at the beginning of the linked list.
     Node *insertAtBegining(Node *head, int x) {
-    
-    Node *newnode = new Node(x);
-    
-    newnode->next = head;
-    head = newnode;
-    return head;
+       // Your code here
+       if(head==NULL)
+       {
+            Node* p=new Node(x);
+            p->next=NULL;
+            head=p;
+            return head;
+       }
+       Node* p=new Node(x);
+       p->next=head;
+       head=p;
+       return head;
     }
     
     
     //Function to insert a node at the end of the linked list.
     Node *insertAtEnd(Node *head, int x)  {
-    
-    Node *newnode = new Node(x);   
-    if (head == NULL)
-    {
-        return newnode;
-    }
-    
-    else{
-        Node * temp;
+       // Your code here
+       if(head==NULL)
+       {
+            Node* p=new Node(x);
+            p->next=NULL;
+            head=p;
+            return head;
+       }
+       Node* p=head;
+       while(p->next!=NULL)
+        p=p->next;
+        Node* r=new Node(x);
+       p->next=r;
+       r->next=NULL;
+       return head;
         
-        temp = head;
-        while (temp->next != NULL)
-        {
-            temp = temp->next;
-        }
-        
-        temp->next = newnode;
-        newnode->next = NULL;
-        
-        return head;
-    }
     }
 };
+
 
 // { Driver Code Starts.
 int main() 
