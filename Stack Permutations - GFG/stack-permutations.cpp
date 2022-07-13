@@ -11,24 +11,38 @@ using namespace std;
 class Solution{
 public:
     int isStackPermutation(int N,vector<int> &A,vector<int> &B){
-        stack<int> s;
-        int i=0,j=0;
-        while(i<N)
+        if(N==1)
         {
-            s.push(A[i]);
-            if(s.top()==B[j])
-            {
-                while(!s.empty() && s.top()==B[j])
-                {
-                    s.pop();
-                    j++;
-                }
-            }
-            i++;
+            if(A[0]==B[0])
+                return 1;
+            else
+                return 0;
         }
-        if(s.empty())
+        stack<int> st;
+        vector<int> v;
+        int i=0,j=0;
+        while(i<N && j<N)
+        {
+            st.push(A[i]);
+            i++;
+            while(!st.empty() && st.top()==B[j]){
+                v.push_back(st.top());
+                st.pop();
+                j++;
+            }
+            
+        }
+        while(!st.empty())
+        {
+            v.push_back(st.top());
+            st.pop();
+        }
+        if(v==B)
             return 1;
         return 0;
+        
+        
+        
     }
 };
 
