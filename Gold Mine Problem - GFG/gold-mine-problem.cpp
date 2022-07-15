@@ -9,28 +9,32 @@ using namespace std;
 
 class Solution{
 public:
+    int dp[51][51];     
+    int solve(vector<vector<int>>&mat, int x, int y){
+        int m = mat.size();
+        int n  = mat[0].size(); 
+        if (x < 0 or x == m or y == n)
+            return INT_MIN;
+            
+        if (y == n-1)
+            return mat[x][y]; 
+            
+        if (dp[x][y] != -1)
+            return dp[x][y]; 
+            
+        int rt = solve(mat, x-1, y+1);
+        int rr = solve(mat, x, y+1); 
+        int rb = solve(mat, x+1, y+1); 
+        
+        return dp[x][y] = mat[x][y] + max({rt, rr, rb}); 
+    }
     int maxGold(int n, int m, vector<vector<int>> M)
     {
-        // code here
-      for (int col = m-2; col>=0;col--){
-          for ( int row = 0; row<n; row++){
-              
-              int right = M[row][col+1];
-              int right_up = (row ==0) ?0: M[row-1][col+1];
-              int right_down = (row == n-1) ?0: M[row+1][col+1];
-              
-              M[row][col] = M[row][col]+max(right , max(right_up, right_down));
-              
-          }
-      }
-      
-      int ans =M[0][0];
-      for ( int i=1; i< n; i++){
-          
-          ans = max( ans, M[i][0]);
-      }
-      return ans;
-        
+        memset(dp, -1, sizeof(dp)); 
+        int ans = 0; 
+        for(int i = 0; i < n; i++)
+            ans = max(ans, solve(M, i, 0));
+        return ans; 
     }
 };
 
