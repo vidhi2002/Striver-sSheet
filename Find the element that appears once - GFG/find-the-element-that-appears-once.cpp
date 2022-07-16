@@ -9,19 +9,15 @@ class Solution{
 public:	
 	int search(int A[], int N){
 	    //code
-	    unordered_map<int,int> mp;
-	    for(int i=0;i<N;i++)
-	        mp[A[i]]++;
-	   int ans=-1;
-	   for(auto it=mp.begin();it!=mp.end();it++)
-	   {
-	       if(it->second==1)
-	       {
-	           ans=it->first;
-	           break;
-	       }
-	   }
-	   return ans;
+	    sort(A,A+N);
+	    int i=0;
+	    while(i<N-1)
+	    {
+	        if(A[i]!=A[i+1])
+	            return A[i];
+	       i+=2;
+	    }
+	    return A[N-1];
 	    
 	}
 };
