@@ -16,8 +16,12 @@ public:
 
         for(int i=0;i<board.size();i++)
             for(int j=0;j<board[i].size();j++)
-                if(f(board,word,i,j,0))
-                    return true;
+            {
+                if(board[i][j]==word[0]){
+                    if(f(board,word,i,j,0))
+                        return true;
+                }
+            }
         return false;
     }
 };
